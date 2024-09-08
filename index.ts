@@ -1,6 +1,5 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
-import type { PageConfig } from "next";
 
 const app = new Hono().basePath("/api");
 
