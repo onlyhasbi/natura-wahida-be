@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
-const app = new Hono();
+const app = new Hono().basePath("/api");
 
 app.get("/", (c) => {
   c.status(200);
