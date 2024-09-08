@@ -1,16 +1,14 @@
-import { Hono } from "hono";
-import { handle } from "hono/vercel";
-import type { PageConfig } from 'next'
+import { Hono } from 'hono'
+import { handle } from 'hono/vercel'
 
-export const config: PageConfig = {
-  api: {
-    bodyParser: false,
-  },
+export const config = {
+  runtime: 'edge'
 }
-const app = new Hono().basePath("/api");
 
-app.get("/", (c) => {
-  return c.json({ message: "Hello" }, 200);
-});
+const app = new Hono().basePath('/api')
 
-export default handle(app);
+app.get('/', (c) => {
+  return c.json({ message: 'Hello Hono!' })
+})
+
+export default handle(app)

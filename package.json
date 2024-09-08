@@ -3,8 +3,8 @@
   "module": "index.ts",
   "type": "module",
   "scripts": {
-    "start": "node ./api/index.ts",
-    "dev": "bun --watch ./api/index.ts"
+    "start": "vercel dev",
+    "deploy": "vercel"
   },
   "devDependencies": {
     "@types/bun": "latest"
@@ -14,6 +14,6 @@
   },
   "dependencies": {
     "hono": "^4.5.11",
-    "next": "^14.2.8"
+    "vercel": "^37.4.0"
   }
 }
