@@ -7,6 +7,4 @@ app.get("/", (c) => {
   return c.json({ message: "Hello" }, 200);
 });
 
-const port = Bun.env.PORT || 3030;
-Bun.serve({ fetch: app.fetch, port });
 export default app;
