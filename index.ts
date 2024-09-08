@@ -1,7 +1,4 @@
 import { Hono } from "hono";
-import { handle } from "hono/vercel";
-
-export const runtime = "edge";
 
 const app = new Hono().basePath("/api");
 
@@ -12,4 +9,4 @@ app.get("/", (c) => {
 
 const port = Bun.env.PORT || 3030;
 Bun.serve({ fetch: app.fetch, port });
-export default handle(app);
+export default app;
