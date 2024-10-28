@@ -1,8 +1,9 @@
 {
   "name": "natura-wahida-be",
-  "module": "index.ts",
+  "module": "api",
   "type": "module",
   "scripts": {
+    "dev": "cross-env NODE_ENV=dev bun run --hot api/index.ts",
     "start": "vercel dev",
     "deploy": "vercel"
   },
@@ -13,7 +14,11 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.45.6",
+    "@types/pg": "^8.11.10",
+    "@vercel/postgres": "^0.10.0",
     "hono": "^4.5.11",
+    "pg": "^8.13.1",
     "vercel": "^37.4.0"
   }
 }
