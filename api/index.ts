@@ -1,16 +1,23 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-import { logger } from 'hono/logger';
+import { logger } from "hono/logger";
 import { prettyJSON } from "hono/pretty-json";
 import { handle } from "hono/vercel";
 import routes from "./routes";
 
 const isDev = process.env.NODE_ENV == "dev";
-export const config = isDev ? {} : { runtime: "edge" };
+export const config = isDev
+  ? {}
+  : {
+      runtime: "edge",
+      api: {
+        bodyParser: false,
+      },
+    };
 
-const app = new Hono();
+const app = new Hono().basePath("/api");
 app.use("/api/*", cors());
-app.use(logger())
+app.use(logger());
 app.use(prettyJSON());
 
 app.route("/", routes);
