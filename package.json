@@ -1,6 +1,6 @@
 {
   "name": "natura-wahida-be",
-  "type": "module",
+  "type": "commonjs",
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
