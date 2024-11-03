@@ -1,6 +1,6 @@
 import { Hono } from "hono";
 
-const patient = new Hono().basePath("/patient");
+const patient = new Hono().basePath("/patients");
 
 patient.get("/", (c) => {
   return c.json({

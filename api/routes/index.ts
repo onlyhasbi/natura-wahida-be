@@ -8,5 +8,8 @@ const routes = new Hono();
 routes.route("/", patient);
 routes.route("/", users);
 routes.route("/", visitor);
+routes.get("/", (c) => {
+  return c.json({ message: "Hello Hono!" });
+});
 
 export default routes;

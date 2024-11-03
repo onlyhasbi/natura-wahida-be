@@ -15,25 +15,25 @@ export const config = isDev
       },
     };
 
-const app = new Hono().basePath("/api");
-app.use("/api/*", cors());
+const app = new Hono();
+
+// Apply middleware
+app.use(cors());
 app.use(logger());
 app.use(prettyJSON());
 
+// Define routes
 app.route("/", routes);
-
-// catch all error
-// app.onError((err, c) => {});
-
 app.get("/", (c) => {
   return c.json({ message: "Hello Hono!" });
 });
 
-const server = isDev
+// Hono configuration for serverless environments
+const serve = isDev
   ? {
       port: 4000,
       fetch: app.fetch,
     }
   : handle(app);
 
-export default server;
+export default serve;
