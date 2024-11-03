@@ -6,12 +6,6 @@ import { handle } from "hono/vercel";
 import routes from "./routes";
 
 const isDev = process.env.NODE_ENV == "dev";
-export const config = isDev
-  ? {}
-  : {
-      runtime: "edge",
-    };
-
 const app = new Hono().basePath("/api");
 
 // Apply middleware
