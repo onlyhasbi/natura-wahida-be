@@ -1,20 +1,13 @@
-import { Hono } from "hono";
-import { cors } from "hono/cors";
-import { logger } from "hono/logger";
-import { prettyJSON } from "hono/pretty-json";
-import routes from "../src/routes";
+import { serve } from "@hono/node-server";
 
-const app = new Hono().basePath("/api");
+import app from "./app";
+import env from "./env";
 
-// Apply middleware
-app.use(cors());
-app.use(logger());
-app.use(prettyJSON());
+const port = env.PORT;
+// eslint-disable-next-line no-console
+console.log(`Server is running on port http://localhost:${port}`);
 
-// Define routes
-app.route("/", routes);
-app.get("/", (c) => {
-  return c.json({ message: "Hello Hono!" });
+serve({
+  fetch: app.fetch,
+  port,
 });
-
-export default app;
