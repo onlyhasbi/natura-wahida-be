@@ -1,6 +1,6 @@
 {
   "name": "natura-wahida-be",
-  "main": "api/index.ts",
+  "main": "index.ts",
   "type": "module",
   "scripts": {
     "dev": "bun run --hot api/index.ts",
