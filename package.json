@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "scripts": {
+    "dev": "bun run --hot api/index.ts",
     "start": "vercel dev",
     "deploy": "vercel"
   },
