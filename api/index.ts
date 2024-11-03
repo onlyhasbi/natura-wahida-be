@@ -33,4 +33,8 @@ const serve = isDev
     }
   : handle(app);
 
-export default serve;
+export const GET = serve;
+export const POST = serve;
+export const PATCH = serve;
+export const PUT = serve;
+export const OPTIONS = serve;
