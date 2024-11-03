@@ -1,8 +1,10 @@
-import { handle } from "@hono/node-server/vercel";
+import { handle } from "hono/vercel";
+import { app } from "../src";
 
-// eslint-disable-next-line ts/ban-ts-comment
-// @ts-expect-error
-// eslint-disable-next-line antfu/no-import-dist
-import app from "../dist/src/app.ts";
+const handler = handle(app);
 
-export default handle(app);
+export const GET = handler;
+export const POST = handler;
+export const PATCH = handler;
+export const PUT = handler;
+export const OPTIONS = handler;
