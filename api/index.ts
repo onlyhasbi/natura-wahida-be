@@ -10,12 +10,9 @@ export const config = isDev
   ? {}
   : {
       runtime: "edge",
-      api: {
-        bodyParser: false,
-      },
     };
 
-const app = new Hono();
+const app = new Hono().basePath("/api");
 
 // Apply middleware
 app.use(cors());

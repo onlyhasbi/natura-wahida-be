@@ -1,5 +1,6 @@
 {
   "name": "natura-wahida-be",
+  "type": "module",
   "scripts": {
     "dev": "bun run --hot api/index.ts",
     "start": "vercel dev",
