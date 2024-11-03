@@ -1,20 +1,20 @@
 {
   "compilerOptions": {
-    "target": "es2021",
-    "module": "es2022",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
+    "target": "ESNext",
+    "jsx": "react-jsx",
+    "jsxImportSource": "hono/jsx",
+    "lib": ["ESNext"],
+    "baseUrl": "./",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "typeRoots": ["./node_modules/@types"],
+
     "strict": true,
-    "baseUrl": "./api",
-    "resolveJsonModule": true,
-    "allowJs": true,
-    "checkJs": false,
-    "noEmit": true,
-    "isolatedModules": true,
-    "allowSyntheticDefaultImports": true,
-    "forceConsistentCasingInFileNames": true,
-    "paths": { "@lib/*": ["/src/lib/*"] }
+    "outDir": "./dist",
+    "skipLibCheck": true
   },
   "ts-node": {
     "experimentalSpecifierResolution": "node",
@@ -22,5 +22,8 @@
     "esm": true
   },
   "include": ["api/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules"],
+  "tsc-alias": {
+    "resolveFullPaths": true
+  }
 }

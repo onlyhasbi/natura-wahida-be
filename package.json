@@ -3,9 +3,10 @@
   "main": "index.ts",
   "type": "module",
   "scripts": {
-    "dev": "bun run --hot api/index.ts",
-    "start": "vercel dev",
-    "deploy": "vercel"
+    "dev": "bun run --hot src/index.ts",
+    "vercel:dev": "bun run build && vercel dev",
+    "start": "node ./dist/src/index.ts",
+    "build": "tsc && tsc-alias"
   },
   "devDependencies": {
     "@types/bun": "latest"
@@ -14,7 +15,10 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@hono/node-server": "^1.13.4",
+    "@types/node": "^22.8.7",
     "hono": "^4.5.11",
+    "tsx": "^4.19.2",
     "vercel": "^37.4.0"
   }
 }
