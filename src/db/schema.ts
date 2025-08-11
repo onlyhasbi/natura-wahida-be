@@ -122,11 +122,10 @@ export const prescriptions = sqliteTable("prescriptions", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   patient_id: integer("patient_id")
     .notNull()
-    .references(() => patients.id),
+    .references(() => patients.id, { onDelete: "cascade" }),
   therapist_id: integer("therapist_id")
     .notNull()
-    .references(() => therapists.id),
-  products: text("products"), // this format will be an array [{product_id:2,dosage_instruction:'3x1'}] use JSON.stringify
+    .references(() => therapists.id, { onDelete: "cascade" }),
   created_at: integer("created_at", { mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),
@@ -139,9 +138,24 @@ export const prescriptions = sqliteTable("prescriptions", {
 export const selectPrescriptions = createSelectSchema(prescriptions);
 export const insertPrescriptions = createInsertSchema(prescriptions);
 
+// prescriptionDetails
+export const prescriptionDetails = sqliteTable("prescription_details", {
+    id: integer("id").primaryKey({ autoIncrement: true }),
+    prescription_id: integer("prescription_id")
+        .notNull()
+        .references(() => prescriptions.id, { onDelete: "cascade" }),
+    product_id: integer("product_id")
+        .notNull()
+        .references(() => products.id, { onDelete: "cascade" }),
+    dosage_instruction: text("dosage_instruction", { length: 255 }).notNull(),
+});
+
+export const selectPrescriptionDetails = createSelectSchema(prescriptionDetails);
+export const insertPrescriptionDetails = createInsertSchema(prescriptionDetails);
+
 export const appointments = sqliteTable("appointments", {
   id: integer("id").primaryKey({ autoIncrement: true }),
-  patient_id: text("patient_id")
+  patient_id: integer("patient_id")
     .notNull()
     .references(() => patients.id),
   date: text("date").notNull(),
@@ -166,13 +180,13 @@ export const insertAppointments = createInsertSchema(appointments);
 export const transactions = sqliteTable("transactions", {
   id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true }),
   total_amount: real("total_amount").notNull(),
-  user_id: text("user_id")
+  user_id: integer("user_id")
     .notNull()
     .references(() => users.id),
   payment_date: integer("payment_date", { mode: "timestamp" })
     .notNull()
     .default(sql`(unixepoch())`),
-  payment_method: text("payment_method", ["tunai", "transfer"]),
+  payment_method: text("payment_method", { enum : ["tunai", "transfer"] }),
   discount: real("discount").default(0),
   status: text("status", { enum: ["selesai", "tertunda"] }),
 });

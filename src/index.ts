@@ -12,8 +12,9 @@ import { prescriptions } from "./api/prescriptions";
 import { transactionProducts } from "./api/transaction_product";
 import { transactionTherapies } from "./api/transaction_therapy";
 import { transactions } from "./api/transactions";
+import { prescriptionDetails } from "./api/prescriptions/detail";
 
-let app = new Elysia({ name: 'natura-wahida' })
+let app = new Elysia({ name: "natura-wahida" })
   .use(plugins)
   .use(auth)
   .group("/api", (app) =>
@@ -26,6 +27,7 @@ let app = new Elysia({ name: 'natura-wahida' })
       .use(products)
       .use(appointments)
       .use(prescriptions)
+      .use(prescriptionDetails)
       .use(transactions)
       .use(transactionProducts)
       .use(transactionTherapies)

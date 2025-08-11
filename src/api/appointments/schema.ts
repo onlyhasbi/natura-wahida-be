@@ -2,7 +2,7 @@ import { Static, t } from "elysia";
 import { insertAppointments } from "../../db/schema";
 
 export const AppointmentsRequestValidationSchema = t.Object({
-  patient_id: t.String({ minLength: 3, maxLength: 150 }),
+  patient_id: t.Number(),
   date: t.String(),
   time: t.String(),
   status: t.Enum({

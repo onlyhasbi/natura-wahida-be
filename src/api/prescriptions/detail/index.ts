@@ -1,29 +1,29 @@
 import Elysia, { t } from "elysia";
-import { message } from "../../common/constant";
+import { message } from "../../../common/constant";
 import {
-  PrescriptionsRequestValidationSchema,
-  PrescriptionsUpdateRequestValidationSchema
+  PrescriptionDetailRequestValidationSchema,
+  PrescriptionDetailUpdateRequestValidationSchema,
 } from "./schema";
 import {
-  addPrescription,
-  deletePrescription,
-  getPrescription,
-  getPrescriptions,
-  updatePrescription
+  addPrescriptionDetail,
+  deletePrescriptionDetail,
+  getPrescriptionDetail,
+  getPrescriptionDetails,
+  updatePrescriptionDetail,
 } from "./services";
 
 const defaultTag = {
   detail: {
-    tags: ["Prescriptions"],
+    tags: ["Prescriptions Detail"],
   },
 };
 
-export const prescriptions = new Elysia().group("/prescriptions", (app) =>
+export const prescriptionDetails = new Elysia().group("/prescriptions", (app) =>
   app
     .post(
-      "",
-      async ({ status, body }) => {
-        addPrescription(body);
+      "/:id/detail",
+      async ({ status, params: { id }, body }) => {
+        addPrescriptionDetail({ prescription_id: +id, ...body });
         return status(200, message("Save", "Prescription"));
       },
       {
@@ -32,13 +32,14 @@ export const prescriptions = new Elysia().group("/prescriptions", (app) =>
             bearerAuth: [],
           },
         ],
-        body: PrescriptionsRequestValidationSchema,
+        body: PrescriptionDetailRequestValidationSchema,
         ...defaultTag,
       }
     )
     .get(
-      "",
-      async ({ status }) => status(200, { data: await getPrescriptions() }),
+      "/:id/details",
+      async ({ status, params: { id } }) =>
+        status(200, { data: await getPrescriptionDetails(+id) }),
       {
         security: [
           {
@@ -49,12 +50,12 @@ export const prescriptions = new Elysia().group("/prescriptions", (app) =>
       }
     )
     .get(
-      "/:id",
+      "/:id/detail",
       async ({ status, params: { id } }) => {
         if (isNaN(Number(id))) {
           return status(400, message("NoId", "Prescription"));
         }
-        const found = await getPrescription(Number(id));
+        const found = await getPrescriptionDetail(Number(id));
         const data = found
           ? { data: found }
           : message("NotFound", "Prescription");
@@ -71,16 +72,16 @@ export const prescriptions = new Elysia().group("/prescriptions", (app) =>
       }
     )
     .put(
-      "/:id",
+      "/:id/detail",
       async ({ status, body, params: { id } }) => {
         if (isNaN(Number(id))) {
           return status(400, message("NoId", "Prescription"));
         }
-        const found = await getPrescription(+id);
+        const found = await getPrescriptionDetail(+id);
         if (!found) {
           return status(404, message("NotFound", "Prescription"));
         }
-        updatePrescription({ id: Number(id), ...body });
+        updatePrescriptionDetail({ id: Number(id), ...body });
         return status(200, message("Update", "Prescription"));
       },
       {
@@ -94,7 +95,7 @@ export const prescriptions = new Elysia().group("/prescriptions", (app) =>
           400: t.Object({ message: t.String() }),
           404: t.Object({ message: t.String() }),
         },
-        body: PrescriptionsUpdateRequestValidationSchema,
+        body: PrescriptionDetailUpdateRequestValidationSchema,
         params: t.Object({
           id: t.String(),
         }),
@@ -102,13 +103,13 @@ export const prescriptions = new Elysia().group("/prescriptions", (app) =>
       }
     )
     .delete(
-      "/:id",
+      "/:id/detail",
       async ({ params: { id }, status }) => {
         if (isNaN(Number(id))) {
           return status(400, message("NoId", "Prescription"));
         }
-        const deletedPrescription = deletePrescription(Number(id));
-        if (!deletedPrescription) {
+        const deletedPrescriptionDetail = deletePrescriptionDetail(Number(id));
+        if (!deletedPrescriptionDetail) {
           return status(404, message("NotFound", "Prescription"));
         }
         return status(200, message("Delete", "Prescription"));

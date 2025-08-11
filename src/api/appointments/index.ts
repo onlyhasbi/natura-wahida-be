@@ -22,7 +22,7 @@ const defaultTag = {
 export const appointments = new Elysia().group("/appointments", (app) =>
   app
     .post(
-      "",
+      "/",
       async ({ status, body }) => {
         addAppointments(body);
         return status(200, message("Save", "Appointments"));
@@ -38,7 +38,7 @@ export const appointments = new Elysia().group("/appointments", (app) =>
       }
     )
     .get(
-      "",
+      "/",
       async ({ status }) => status(200, { data: await getAppointmentss() }),
       {
         security: [
